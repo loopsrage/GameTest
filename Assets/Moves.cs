@@ -77,7 +77,7 @@ public class Moves : ScriptableObject
         {
             case AI.Elements.Fire:
                 // Low Range
-                Range = Random.Range(0, 3);
+                Range = Random.Range(2, 10);
                 break;
             case AI.Elements.Water:
                 // Low Range
@@ -180,6 +180,19 @@ public class Moves : ScriptableObject
         }
         return effectChance;
     }
+    public int getCooldown(int D)
+    {
+        int CoolDown;
+        if (D <= 5 && D >= 1)
+        {
+            CoolDown = 5;
+        }
+        else
+        {
+            CoolDown = 10;
+        }
+        return CoolDown;
+    }
     public class NewMove
     {
         public AI.Elements MoveType; // Set by AI type
@@ -189,11 +202,9 @@ public class Moves : ScriptableObject
         public int Range; // Set by Move Type
         public int EffectChance; // Set by Range, Damage, Move type and Accuracy
         public int Accuracy; // Set by Range, Move type
+        public int CoolDownTime;
+        public float ActiveCooldown;
         public Moves MoveMaker = ScriptableObject.CreateInstance<Moves>();
-        public void UseMove()
-        {
-            Debug.Log(Range.ToString() + " " + Damage.ToString());
-        }
         public NewMove(AI.Elements MT)
         {
             MoveType = MT;
@@ -202,6 +213,23 @@ public class Moves : ScriptableObject
             Range = MoveMaker.getRange(MT);
             Accuracy = MoveMaker.getAccuracy(Range, MT);
             EffectChance = MoveMaker.getEffectChance(Range, Damage, MT, Accuracy);
+            CoolDownTime = MoveMaker.getCooldown(Damage);
         }
+    }
+}
+public static class MoveExtensions
+{
+    public static void UseMove(this Moves.NewMove MoveU,Transform CurrentPos, Transform Target)
+    {
+        GameObject G = new GameObject();
+        G.AddComponent<SpellManager>();
+        G.AddComponent<Rigidbody>();
+        G.AddComponent<SphereCollider>();
+        G.AddComponent<ParticleSystem>();
+
+        SpellManager SM = G.GetComponent<SpellManager>();
+        SM.Target = Target;
+        SM.CastorPos = CurrentPos;
+        SM.ThisMove = MoveU;
     }
 }

@@ -230,7 +230,10 @@
     <Compile Include="Assets\AI.cs" />
     <Compile Include="Assets\DynScript.cs" />
     <Compile Include="Assets\Moves.cs" />
+    <Compile Include="Assets\MoveUse.cs" />
+    <Compile Include="Assets\ParticleManager.cs" />
     <Compile Include="Assets\SO1.cs" />
+    <Compile Include="Assets\SpellManager.cs" />
     <Compile Include="Assets\TargetManager.cs" />
     <Compile Include="Assets\ThirdPersonAI.cs" />
     <Compile Include="Assets\UnitManager.cs" />

@@ -68,7 +68,6 @@ public class AI : ScriptableObject
         public int Stamina;
         public AI.Elements UnitType;
         public List<Moves.NewMove> Abilities = new List<Moves.NewMove>();
-        public 
         public AIUnit(AI.Elements UT)
         {
             UnitType = UT;
